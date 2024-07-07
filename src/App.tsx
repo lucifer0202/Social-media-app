@@ -1,26 +1,43 @@
+// src/App.tsx
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import LoginPage from './auth/LoginPage';
+import RegisterPage from './auth/RegisterPage';
+import FeedPage from './pages/FeedPage';
+import MyPostsPage from './pages/MyPostsPage';
+import CreatePostPage from './pages/CreatePostPage';
+import SettingsPage from './pages/SettingsPage';
+import AppBar from './components/AppBar';
+import { AuthProvider, useAuth } from './contexts/AuthContext';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+const PrivateRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
+  const { currentUser } = useAuth();
+  return currentUser ? children : <Navigate to="/login" />;
+};
+
+const PublicRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
+  const { currentUser } = useAuth();
+  return !currentUser ? children : <Navigate to="/" />;
+};
+
+const AppRoutes: React.FC = () => (
+  <Routes>
+    <Route path="/login" element={<PublicRoute><LoginPage /></PublicRoute>} />
+    <Route path="/register" element={<PublicRoute><RegisterPage /></PublicRoute>} />
+    <Route path="/" element={<PrivateRoute><FeedPage /></PrivateRoute>} />
+    <Route path="/myposts" element={<PrivateRoute><MyPostsPage /></PrivateRoute>} />
+    <Route path="/createpost" element={<PrivateRoute><CreatePostPage /></PrivateRoute>} />
+    <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
+  </Routes>
+);
+
+const App: React.FC = () => (
+  <AuthProvider>
+    <Router>
+      <AppBar />
+      <AppRoutes />
+    </Router>
+  </AuthProvider>
+);
 
 export default App;
