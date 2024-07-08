@@ -1,4 +1,3 @@
-// src/pages/CreatePostPage.tsx
 import React, { useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router-dom';
@@ -15,11 +14,11 @@ const CreatePostPage: React.FC = () => {
   const { currentUser } = useAuth();
   const navigate = useNavigate();
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files) {
-      setImageFile(e.target.files[0]);
-    }
-  };
+  // const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   if (e.target.files) {
+  //     setImageFile(e.target.files[0]);
+  //   }
+  // };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -84,9 +83,9 @@ const CreatePostPage: React.FC = () => {
             value={imageUrl}
             onChange={(e) => setImageUrl(e.target.value)}
           />
-          <Box sx={{ marginTop: 2 }}>
+          {/* <Box sx={{ marginTop: 2 }}>
             <input type="file" accept="image/*" onChange={handleFileChange} />
-          </Box>
+          </Box> */}
           <Box sx={{ marginTop: 2 }}>
             <Button type="submit" variant="contained" color="primary" fullWidth>
               Create Post

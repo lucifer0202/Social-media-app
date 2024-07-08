@@ -1,6 +1,7 @@
+// src/components/Sidebar.tsx
 import React, { useState } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Toolbar, Typography, Divider, Box } from '@mui/material';
-import { Home, PostAdd, Settings, ListAlt, Menu } from '@mui/icons-material';
+import { Home, PostAdd, Settings, ListAlt, Menu, Bookmark } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -38,7 +39,7 @@ const Sidebar: React.FC = () => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Menu
+            Social Media
           </Typography>
         </Toolbar>
         <Divider />
@@ -61,6 +62,12 @@ const Sidebar: React.FC = () => {
             </ListItemIcon>
             <ListItemText primary="Create Post" />
           </ListItem>
+          <ListItem button onClick={() => { navigate('/savedposts'); handleDrawerToggle(); }}>
+            <ListItemIcon>
+              <Bookmark />
+            </ListItemIcon>
+            <ListItemText primary="Saved Posts" />
+          </ListItem>
           <ListItem button onClick={() => { navigate('/settings'); handleDrawerToggle(); }}>
             <ListItemIcon>
               <Settings />
@@ -79,7 +86,7 @@ const Sidebar: React.FC = () => {
       >
         <Toolbar>
           <Typography variant="h6" noWrap>
-            Menu
+            Social Media
           </Typography>
         </Toolbar>
         <Divider />
@@ -102,6 +109,12 @@ const Sidebar: React.FC = () => {
             </ListItemIcon>
             <ListItemText primary="Create Post" />
           </ListItem>
+          <ListItem button onClick={() => navigate('/savedposts')}>
+            <ListItemIcon>
+              <Bookmark />
+            </ListItemIcon>
+            <ListItemText primary="Saved Posts" />
+          </ListItem>
           <ListItem button onClick={() => navigate('/settings')}>
             <ListItemIcon>
               <Settings />
@@ -115,4 +128,3 @@ const Sidebar: React.FC = () => {
 };
 
 export default Sidebar;
-

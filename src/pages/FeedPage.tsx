@@ -1,4 +1,3 @@
-// src/pages/FeedPage.tsx
 import React, { useEffect, useState } from 'react';
 import { collection, query, getDocs, doc, updateDoc, getDoc } from 'firebase/firestore';
 import { firestore } from '../firebaseConfig';
@@ -10,6 +9,7 @@ const FeedPage: React.FC = () => {
   const [newComment, setNewComment] = useState<string>('');
   const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
   const { currentUser } = useAuth();
+  const [savedPostIds, setSavedPostIds] = useState<string[]>([]);
 
   useEffect(() => {
     const fetchPosts = async () => {
@@ -22,8 +22,21 @@ const FeedPage: React.FC = () => {
       }
     };
 
+    const fetchSavedPosts = async () => {
+      if (!currentUser) return;
+
+      const userDoc = doc(firestore, 'users', currentUser.uid);
+      const userSnapshot = await getDoc(userDoc);
+      const userData = userSnapshot.data();
+
+      if (userData && userData.savedPosts) {
+        setSavedPostIds(userData.savedPosts);
+      }
+    };
+
     fetchPosts();
-  }, []);
+    fetchSavedPosts();
+  }, [currentUser]);
 
   const handleLike = async (postId: string) => {
     if (!currentUser) return;
@@ -66,19 +79,25 @@ const FeedPage: React.FC = () => {
   };
 
   const handleSave = async (postId: string) => {
-    if (!currentUser) return;
+    console.log("===========postId=======", postId);
 
+    if (!currentUser) return;
+    
     try {
       const userDoc = doc(firestore, 'users', currentUser.uid);
       const userSnapshot = await getDoc(userDoc);
+      console.log("==========userDoc========", userDoc);
       const userData = userSnapshot.data();
       if (!userData) return;
-
-      const updatedSavedPosts = (userData.savedPosts || []).includes(postId)
-        ? (userData.savedPosts || []).filter((id: string) => id !== postId)
-        : [...(userData.savedPosts || []), postId];
+      
+      const updatedSavedPosts = savedPostIds.includes(postId)
+      ? savedPostIds.filter((id: string) => id !== postId)
+      : [...savedPostIds, postId];
 
       await updateDoc(userDoc, { savedPosts: updatedSavedPosts });
+      setSavedPostIds(updatedSavedPosts);
+      console.log("updatedSavedPosts", updatedSavedPosts);
+      
     } catch (error) {
       console.error("Error saving post: ", error);
     }
@@ -109,8 +128,12 @@ const FeedPage: React.FC = () => {
                   >
                     {(post.likes || []).includes(currentUser?.uid) ? 'Unlike' : 'Like'}
                   </Button>
-                  <Button variant="contained" color="primary" onClick={() => handleSave(post.id)}>
-                    Save
+                  <Button
+                    variant="contained"
+                    color="primary"
+                    onClick={() => handleSave(post.id)}
+                  >
+                    {savedPostIds.includes(post.id) ? 'Unsave' : 'Save'}
                   </Button>
                   <Button
                     variant="contained"

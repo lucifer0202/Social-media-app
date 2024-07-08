@@ -9,6 +9,7 @@ import CreatePostPage from './pages/CreatePostPage';
 import SettingsPage from './pages/SettingsPage';
 import AppBar from './components/AppBar';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
+import SavedPostsPage from './pages/SavedPostsPage';
 
 const PrivateRoute: React.FC<{ children: JSX.Element }> = ({ children }) => {
   const { currentUser } = useAuth();
@@ -27,8 +28,8 @@ const AppRoutes: React.FC = () => (
     <Route path="/" element={<PrivateRoute><FeedPage /></PrivateRoute>} />
     <Route path="/myposts" element={<PrivateRoute><MyPostsPage /></PrivateRoute>} />
     <Route path="/createpost" element={<PrivateRoute><CreatePostPage /></PrivateRoute>} />
-    <Route path="/settings" element={<PrivateRoute><SettingsPage /></PrivateRoute>} />
-  </Routes>
+    <Route path="/savedposts" element={<PrivateRoute><SavedPostsPage /></PrivateRoute>} />
+    </Routes>
 );
 
 const App: React.FC = () => (
