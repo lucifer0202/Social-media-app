@@ -1,7 +1,7 @@
 // src/components/Sidebar.tsx
 import React, { useState } from 'react';
 import { Drawer, List, ListItem, ListItemIcon, ListItemText, IconButton, Toolbar, Typography, Divider, Box } from '@mui/material';
-import { Home, PostAdd, Settings, ListAlt, Menu, Bookmark } from '@mui/icons-material';
+import { Home, PostAdd, ListAlt, Menu, Bookmark } from '@mui/icons-material';
 import { useNavigate } from 'react-router-dom';
 
 const drawerWidth = 240;
@@ -68,12 +68,6 @@ const Sidebar: React.FC = () => {
             </ListItemIcon>
             <ListItemText primary="Saved Posts" />
           </ListItem>
-          <ListItem button onClick={() => { navigate('/settings'); handleDrawerToggle(); }}>
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
-          </ListItem>
         </List>
       </Drawer>
       <Drawer
@@ -114,12 +108,6 @@ const Sidebar: React.FC = () => {
               <Bookmark />
             </ListItemIcon>
             <ListItemText primary="Saved Posts" />
-          </ListItem>
-          <ListItem button onClick={() => navigate('/settings')}>
-            <ListItemIcon>
-              <Settings />
-            </ListItemIcon>
-            <ListItemText primary="Settings" />
           </ListItem>
         </List>
       </Drawer>

@@ -6,7 +6,6 @@ import RegisterPage from './auth/RegisterPage';
 import FeedPage from './pages/FeedPage';
 import MyPostsPage from './pages/MyPostsPage';
 import CreatePostPage from './pages/CreatePostPage';
-import SettingsPage from './pages/SettingsPage';
 import AppBar from './components/AppBar';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
 import SavedPostsPage from './pages/SavedPostsPage';
