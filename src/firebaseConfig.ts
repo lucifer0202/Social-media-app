@@ -1,17 +1,15 @@
-// src/firebaseConfig.ts
 import { initializeApp } from 'firebase/app';
 import { getFirestore } from 'firebase/firestore';
 import { getAuth } from 'firebase/auth';
 import { getStorage } from 'firebase/storage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDZYjrdexOBvID3waDbKja-RQr3ww1nP50",
-  authDomain: "quakka-socialmedia.firebaseapp.com",
-  projectId: "quakka-socialmedia",
-  storageBucket: "quakka-socialmedia.appspot.com",
-  messagingSenderId: "672405811492",
-  appId: "1:672405811492:web:11347287a971af32a3c3b1",
-  measurementId: "G-XXWJ7E7J33"
+  apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+  authDomain: process.env.REACT_APP_FIREBASE_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_FIREBASE_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_FIREBASE_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_FIREBASE_APP_ID
 };
 
 const app = initializeApp(firebaseConfig);

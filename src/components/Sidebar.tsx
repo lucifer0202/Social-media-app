@@ -37,11 +37,9 @@ const Sidebar: React.FC = () => {
           '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
         }}
       >
-        <Toolbar>
-          <Typography variant="h6" noWrap>
-            Social Media
+        <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+            Social Media App
           </Typography>
-        </Toolbar>
         <Divider />
         <List>
           <ListItem button onClick={() => { navigate('/'); handleDrawerToggle(); }}>
